@@ -1,0 +1,11 @@
+﻿<br />
+<div class="embed-responsive embed-responsive-16by9">
+    <iframe class="embed-responsive-item" src="@ViewBag.Url" allowfullscreen></iframe>
+</div>
+
+<h3>@ViewBag.VideoTitle</h3>
+
+<div class="visible-lg-inline-block">
+    <button type="button" class="btn btn-light btn-lg" onclick="location.href='@Url.Action("Update", "Home")'">Next Video</button>
+    <button type="button" class="btn btn-light btn-lg" onclick="location.href='@Url.Action("Refresh", "Home")'">Refresh List</button>
+</div>
