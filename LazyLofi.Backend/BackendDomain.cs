@@ -29,6 +29,19 @@ namespace LazyLofi.Backend
         {
         }
 
+        public bool AreThereVideosCurrently()
+        {
+            try
+            {
+                var result = BackendManager.AreThereVideosCurrently();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         /// <summary>
         /// Gets the videos.
         /// </summary>

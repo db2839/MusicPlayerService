@@ -54,6 +54,8 @@ namespace LazyLofi.Backend.Manager.Services.Database
             }
         }
 
+        internal bool AreThereVideosCurrently() => DatabaseClient.AreThereVideosCurrently();
+
         public DatabaseService(ServiceLocator serviceLocator)
         {
             this.serviceLocator = serviceLocator;

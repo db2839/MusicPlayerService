@@ -4,7 +4,6 @@ using LazyLofi.Backend.Manager.Services.Youtube.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Threading.Tasks;
 
 namespace LazyLofi.Backend.Manager.Services.Database
 {
@@ -49,22 +48,22 @@ namespace LazyLofi.Backend.Manager.Services.Database
         }
 
         /// <summary>
-        /// Executes the non query asynchronous.
+        /// Ares the there videos currently.
         /// </summary>
-        /// <param name="sql">The SQL.</param>
-        private async Task<int> ExecuteNonQueryAsync(string sql)
+        /// <returns></returns>
+        internal bool AreThereVideosCurrently()
         {
-            var sqlCommand = sqlLiteConnection.CreateCommand();
-            sqlCommand.CommandText = sql;
-            var result = await sqlCommand.ExecuteNonQueryAsync();
-            return result;
-        }
+            bool result;
 
-        private async Task<int> ExecuteNonQueryAsync(string sql, SQLiteConnection connection)
-        {
-            var sqlCommand = connection.CreateCommand();
-            sqlCommand.CommandText = sql;
-            var result = await sqlCommand.ExecuteNonQueryAsync();
+            using (sqlLiteConnection = new SQLiteConnection(connectionString))
+            {
+                sqlLiteConnection.Open();
+
+                result = this.sqlLiteConnection.QueryFirstOrDefault<int>($"SELECT EXISTS (SELECT 1 FROM {tableName});") == 1;
+
+                sqlLiteConnection.Close();
+            }
+
             return result;
         }
 
@@ -127,7 +126,7 @@ namespace LazyLofi.Backend.Manager.Services.Database
                     var sql = $"INSERT INTO {tableName} (Title, Url) VALUES('{video.Ttile}','{video.Url}')";
                     var result = ExecuteNonQuery(sql);
                     itemCount += result;
-                    Console.WriteLine(itemCount);
+                    //Console.WriteLine(itemCount);
                 }
 
                 sqlLiteConnection.Close();
@@ -163,27 +162,6 @@ namespace LazyLofi.Backend.Manager.Services.Database
         public DatabaseClient(string connectionString)
         {
             this.connectionString = connectionString;
-        }
-
-        /// <summary>
-        /// Creates the connection.
-        /// </summary>
-        /// <returns></returns>
-        public static SQLiteConnection CreateConnection()
-        {
-            SQLiteConnection sqlite_conn;
-            // Create a new database connection:
-            sqlite_conn = new SQLiteConnection("Data Source=VideoTable.db;Version=3;New=True;Compress=True;", true);
-            // Open the connection:
-            try
-            {
-                sqlite_conn.Open();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return sqlite_conn;
         }
     }
 }

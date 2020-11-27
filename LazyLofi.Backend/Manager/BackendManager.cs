@@ -1,6 +1,7 @@
 ﻿using LazyLofi.Backend.Manager.ServiceLocators;
 using LazyLofi.Backend.Manager.Services.Database;
 using LazyLofi.Backend.Manager.Services.Database.Models;
+using System;
 using System.Collections.Generic;
 
 namespace LazyLofi.Backend.Manager
@@ -19,6 +20,8 @@ namespace LazyLofi.Backend.Manager
                     = serviceLocator.CreateDatabaseService());
             }
         }
+
+        internal bool AreThereVideosCurrently() => DatabaseService.AreThereVideosCurrently();
 
         /// <summary>
         /// Gets the videos.

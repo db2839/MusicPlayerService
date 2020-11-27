@@ -23,7 +23,11 @@ namespace LazyLofi.Backend.Manager.Configuration
 
         protected abstract string RetrieveAppSettings(string appSettingKey);
 
-        public string GetDatabaseConnectionString() => this.RetrieveAppSettingsThrowIfMissing("ConnectionString");
+        public string GetDatabaseConnectionString()
+        {
+            var initialString = this.RetrieveAppSettingsThrowIfMissing("ConnectionString");
+            return initialString.Replace("{AppDir}", AppDomain.CurrentDomain.BaseDirectory);
+        }
 
         public string GetYoutubeApiKey() => this.RetrieveAppSettingsThrowIfMissing("YoutubeApiKey");
     }

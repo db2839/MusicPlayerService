@@ -75,7 +75,7 @@ namespace LazyLofi.Backend.Manager.Services.Youtube
             {
                 searchListRequest.Q = query; // Replace with your search term.
                 searchListRequest.MaxResults = 50;
-                searchListRequest.SafeSearch = SearchResource.ListRequest.SafeSearchEnum.Moderate;
+                searchListRequest.VideoEmbeddable = SearchResource.ListRequest.VideoEmbeddableEnum.True__;
                 searchListRequest.VideoDefinition = SearchResource.ListRequest.VideoDefinitionEnum.High;
                 searchListRequest.Type = "video";
                 searchListResponse = searchListRequest.Execute();
